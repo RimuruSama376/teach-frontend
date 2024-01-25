@@ -10,9 +10,13 @@ const { TabPane } = Tabs
 const TabsContainer = styled.div`
   height: 100%;
   padding: 10px;
-  margin-bottom: 20px;
+  padding-bottom: 0;
+  /* margin-bottom: 20px; */
   padding-left: 40px;
   padding-right: 40px;
+  .ant-tabs {
+    height: 100%;
+  }
   .ant-tabs-nav {
     margin: 0;
   }
@@ -40,7 +44,12 @@ const TabsContainer = styled.div`
   .ant-tabs-ink-bar {
     background-color: #4b65f6;
   }
-
+  .ant-tabs-content {
+    height: 100%;
+    .ant-tabs-tabpane {
+      height: 100%;
+    }
+  }
   .ant-tabs-extra-content {
     @media (max-width: 930px) {
       /* flex-direction: column; */
@@ -61,7 +70,6 @@ const StyledTabPane = styled(TabPane)`
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 3px green solid;
 `
 
 const StyledTopBar = styled.div`
@@ -70,9 +78,9 @@ const StyledTopBar = styled.div`
   justify-content: space-between;
   /* display: none; */
   @media (min-width: 930px) {
-      /* flex-direction: column; */
-      display: none;
-    }
+    /* flex-direction: column; */
+    display: none;
+  }
 `
 
 const MyTabs = () => {

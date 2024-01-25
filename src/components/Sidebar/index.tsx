@@ -12,7 +12,14 @@ import {
 import { Layout, Menu, Button, theme } from 'antd'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faClipboardList, faCommentDots, faHouse, faPersonChalkboard, faUserGroup, faVideo } from '@fortawesome/free-solid-svg-icons'
+import {
+  faClipboardList,
+  faCommentDots,
+  faHouse,
+  faPersonChalkboard,
+  faUserGroup,
+  faVideo
+} from '@fortawesome/free-solid-svg-icons'
 
 const { Header, Sider } = Layout
 
@@ -70,94 +77,94 @@ const StyledButton = styled.button`
 
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
-  
+
   return (
-      <StyledSider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={270}>
-        <InnerLayout style={{ display: 'flex' }}>
-          <SiderHeader>
-            <div
-              style={{
-                height: '50px',
-                width: '50px',
-                background: '#4b65f6',
-                color: 'white',
-                borderRadius: '99px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '18px'
-              }}
-            >
-              PM
-            </div>
-            <p style={{ marginLeft: '10px', fontSize: '16px' }}>
-              {!collapsed ? 'Priyansh Mandloi' : ''}
-            </p>
-          </SiderHeader>
-          <StyledButton onClick={() => setCollapsed(!collapsed)}>
-            {!collapsed ? <CloseOutlined /> : <DoubleRightOutlined />}
-            <span>{!collapsed ? 'Collapse' : ''}</span>
-          </StyledButton>
-          <Menu
-            theme='light'
-            mode='inline'
-            defaultSelectedKeys={['2']}
-            items={[
-              {
-                key: '1',
-                icon: <FontAwesomeIcon icon={faHouse} />,
-                label: 'Dashboard'
-              },
-              {
-                key: '2',
-                icon: <FontAwesomeIcon icon={faPersonChalkboard} />,
-                label: 'Teach'
-              },
-              {
-                key: '3',
-                icon: <FontAwesomeIcon icon={faClipboardList} />,
-                label: 'Test'
-              },
-              {
-                key: '4',
-                icon: <FontAwesomeIcon icon={faVideo} />,
-                label: 'Take class'
-              },
-              {
-                key: '5',
-                icon: <FontAwesomeIcon icon={faUserGroup} />,
-                label: 'Video Library'
-              },
-              {
-                key: '6',
-                icon: <FontAwesomeIcon icon={faCommentDots} />,
-                label: 'Doubts'
-              }
-            ]}
-            style={{ flex: 2 }}
-          />
-          <SiderFooter>
-            <div
-              style={{
-                height: '50px',
-                width: '50px',
-                background: '#4b65f6',
-                color: 'white',
-                borderRadius: '99px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '18px'
-              }}
-            >
-              PM
-            </div>
-            <p style={{ marginLeft: '10px', fontSize: '16px' }}>
-              {!collapsed ? 'Priyansh Mandloi' : ''}
-            </p>
-          </SiderFooter>
-        </InnerLayout>
-      </StyledSider>
+    <StyledSider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={270}>
+      <InnerLayout style={{ display: 'flex' }}>
+        <SiderHeader>
+          <div
+            style={{
+              height: '50px',
+              width: '50px',
+              background: '#4b65f6',
+              color: 'white',
+              borderRadius: '99px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px'
+            }}
+          >
+            PM
+          </div>
+          <p style={{ marginLeft: '10px', fontSize: '16px' }}>
+            {!collapsed ? 'Priyansh Mandloi' : ''}
+          </p>
+        </SiderHeader>
+        <StyledButton onClick={() => setCollapsed(!collapsed)}>
+          {!collapsed ? <CloseOutlined /> : <DoubleRightOutlined />}
+          <span>{!collapsed ? 'Collapse' : ''}</span>
+        </StyledButton>
+        <Menu
+          theme='light'
+          mode='inline'
+          defaultSelectedKeys={['2']}
+          items={[
+            {
+              key: '1',
+              icon: <FontAwesomeIcon icon={faHouse} />,
+              label: 'Dashboard'
+            },
+            {
+              key: '2',
+              icon: <FontAwesomeIcon icon={faPersonChalkboard} />,
+              label: 'Teach'
+            },
+            {
+              key: '3',
+              icon: <FontAwesomeIcon icon={faClipboardList} />,
+              label: 'Test'
+            },
+            {
+              key: '4',
+              icon: <FontAwesomeIcon icon={faVideo} />,
+              label: 'Take class'
+            },
+            {
+              key: '5',
+              icon: <FontAwesomeIcon icon={faUserGroup} />,
+              label: 'Video Library'
+            },
+            {
+              key: '6',
+              icon: <FontAwesomeIcon icon={faCommentDots} />,
+              label: 'Doubts'
+            }
+          ]}
+          style={{ flex: 2 }}
+        />
+        <SiderFooter>
+          <div
+            style={{
+              height: '50px',
+              width: '50px',
+              background: '#4b65f6',
+              color: 'white',
+              borderRadius: '99px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px'
+            }}
+          >
+            PM
+          </div>
+          <p style={{ marginLeft: '10px', fontSize: '16px' }}>
+            {!collapsed ? 'Priyansh Mandloi' : ''}
+          </p>
+        </SiderFooter>
+      </InnerLayout>
+    </StyledSider>
   )
 }
 

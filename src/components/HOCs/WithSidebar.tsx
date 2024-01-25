@@ -1,4 +1,4 @@
-import React, { ComponentType, FC } from 'react'
+import { ComponentType, FC } from 'react'
 import { Layout } from 'antd'
 import styled from 'styled-components'
 
@@ -7,7 +7,7 @@ import Sidebar from '../Sidebar'
 const { Content } = Layout
 
 const StyledLayout = styled(Layout)`
-  height: 100vh;
+  max-height: 100vh;
   background-color: white !important;
 `
 

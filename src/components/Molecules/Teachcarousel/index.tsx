@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import { Carousel } from 'antd'
-// import "antd/dist/antd.css";
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player'
-import { useState } from 'react'
 
 const Container = styled.div`
   position: relative;
@@ -133,12 +131,6 @@ interface TeachCarouselProps {
 }
 
 const TeachCarousel: React.FC<TeachCarouselProps> = ({ title, urls }) => {
-  urls = [
-    'https://www.youtube.com/watch?v=cLRztK1zE6s',
-    'https://www.youtube.com/watch?v=LSRNmhLS76o',
-    'https://www.youtube.com/watch?v=3WCIyNOrzwM&t=588s',
-    'https://www.youtube.com/watch?v=e0CaefOcyAY'
-  ]
   return (
     <Container>
       <LeftContainer>
