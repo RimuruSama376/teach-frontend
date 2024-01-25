@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import TeachCarousel from '../../Molecules/Teachcarousel/indext'
+import TeachCarousel from '../../Molecules/Teachcarousel'
 
 const Container = styled.div`
   padding-top: 10px;
@@ -9,8 +9,7 @@ const Container = styled.div`
 function TeachSection() {
   return (
     <Container>
-      TeachSection
-      <TeachCarousel />
+      <TeachCarousel title='' urls={[]}/>
     </Container>
   )
 }

@@ -10,8 +10,9 @@ const { TabPane } = Tabs
 const TabsContainer = styled.div`
   height: 100%;
   padding: 10px;
-  padding-left: 10px;
-  padding-right: 15px;
+  margin-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
   .ant-tabs-nav {
     margin: 0;
   }
@@ -39,6 +40,13 @@ const TabsContainer = styled.div`
   .ant-tabs-ink-bar {
     background-color: #4b65f6;
   }
+
+  .ant-tabs-extra-content {
+    @media (max-width: 930px) {
+      /* flex-direction: column; */
+      display: none;
+    }
+  }
 `
 
 const ChapterName = styled.span`
@@ -50,16 +58,46 @@ const ChapterName = styled.span`
 `
 
 const StyledTabPane = styled(TabPane)`
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    border: 3px green solid;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border: 3px green solid;
+`
+
+const StyledTopBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* display: none; */
+  @media (min-width: 930px) {
+      /* flex-direction: column; */
+      display: none;
+    }
 `
 
 const MyTabs = () => {
   return (
     <>
       <TabsContainer>
+        <StyledTopBar>
+          <div>
+            <>
+              <LeftOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
+              <ChapterName>Chapter Name</ChapterName>
+            </>
+          </div>
+          <div>
+            <>
+              <SearchOutlined style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer' }} />
+              <DownloadOutlined
+                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer' }}
+              />
+              <ShareAltOutlined
+                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer' }}
+              />
+            </>
+          </div>
+        </StyledTopBar>
         <Tabs
           defaultActiveKey='1'
           tabBarExtraContent={{
@@ -86,7 +124,7 @@ const MyTabs = () => {
         >
           <StyledTabPane tab='Teach' key='1'>
             {/* Content for Teach tab */}
-            <TeachSection/>
+            <TeachSection />
           </StyledTabPane>
           <StyledTabPane tab='Worksheet' key='2'>
             {/* Content for Worksheet tab */}
