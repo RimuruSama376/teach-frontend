@@ -1,13 +1,14 @@
-import React from 'react'
 import { Tabs } from 'antd'
 import { SearchOutlined, DownloadOutlined, ShareAltOutlined, LeftOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
-import withSidebarLayout from '../HOCs/WithSidebar'
+import withSidebarLayout from '../../HOCs/WithSidebar'
+import TeachSection from '../TeachSection'
 
 const { TabPane } = Tabs
 
 // Styled components
 const TabsContainer = styled.div`
+  height: 100%;
   padding: 10px;
   padding-left: 10px;
   padding-right: 15px;
@@ -40,14 +41,6 @@ const TabsContainer = styled.div`
   }
 `
 
-const HeaderContainer = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 8px;
-  background: #ffffff; // Use your desired color
-  color: #000; // Use your desired color
-`
-
 const ChapterName = styled.span`
   margin-right: auto;
   padding-left: 16px;
@@ -56,12 +49,16 @@ const ChapterName = styled.span`
   height: 100%;
 `
 
+const StyledTabPane = styled(TabPane)`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 3px green solid;
+`
+
 const MyTabs = () => {
   return (
     <>
-      {/* <HeaderContainer> */}
-      {/* <LeftOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
-        <ChapterName>Chapter Name</ChapterName> */}
       <TabsContainer>
         <Tabs
           defaultActiveKey='1'
@@ -87,19 +84,18 @@ const MyTabs = () => {
             )
           }}
         >
-          <TabPane tab='Teach' key='1'>
+          <StyledTabPane tab='Teach' key='1'>
             {/* Content for Teach tab */}
-          </TabPane>
-          <TabPane tab='Worksheet' key='2'>
+            <TeachSection/>
+          </StyledTabPane>
+          <StyledTabPane tab='Worksheet' key='2'>
             {/* Content for Worksheet tab */}
-          </TabPane>
-          <TabPane tab='Mind-Map' key='3'>
+          </StyledTabPane>
+          <StyledTabPane tab='Mind-Map' key='3'>
             {/* Content for Mind-Map tab */}
-          </TabPane>
+          </StyledTabPane>
         </Tabs>
       </TabsContainer>
-      {/* </HeaderContainer> */}
-      {/* Content below the header */}
     </>
   )
 }

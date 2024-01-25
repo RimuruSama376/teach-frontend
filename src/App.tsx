@@ -1,5 +1,5 @@
 import './App.css';
-import MyTabs from './components/TeachTabs'
+import MyTabs from './components/Organisms/TeachTabs'
 
 function App() {
   return (

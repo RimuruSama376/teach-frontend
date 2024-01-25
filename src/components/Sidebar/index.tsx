@@ -46,6 +46,7 @@ const SiderHeader = styled(Header)`
 
 const SiderFooter = styled(Header)`
   padding: 10px;
+  padding-right: 0;
   background-color: white !important;
   display: flex;
   flex-direction: row;
@@ -69,10 +70,7 @@ const StyledButton = styled.button`
 
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false)
-  const {
-    token: { colorBgContainer, borderRadiusLG }
-  } = theme.useToken()
-
+  
   return (
       <StyledSider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={270}>
         <InnerLayout style={{ display: 'flex' }}>
