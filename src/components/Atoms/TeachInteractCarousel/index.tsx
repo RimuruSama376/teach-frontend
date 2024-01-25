@@ -3,6 +3,7 @@ import { Carousel } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 
 const Container = styled.div`
+  overflow-x: hidden;
   max-width: 500px;
   display: block;
   justify-self: center;

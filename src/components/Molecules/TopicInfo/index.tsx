@@ -10,6 +10,7 @@ const Container = styled.div`
   flex: 2;
   border: 1px green solid;
   margin-right: 2px;
+  overflow-x: hidden;
 `
 const Topbar = styled.div`
   width: 100%;
@@ -58,7 +59,7 @@ const StyledTextArea = styled.textarea`
   /* width: 100%; */
   flex: 2;
   margin: 11px;
-  margin-bottom: ;
+  margin-bottom: 1px;
   overflow-y: auto; // Allow vertical scrolling
   border: 0px solid #ccc; // A subtle border
   padding: 10px;
