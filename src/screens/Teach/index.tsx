@@ -1,8 +1,8 @@
 import { Tabs } from 'antd'
 import { SearchOutlined, DownloadOutlined, ShareAltOutlined, LeftOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
-import withSidebarLayout from '../../HOCs/WithSidebar'
-import TeachSection from '../TeachSection'
+import withSidebarLayout from '../../components/HOCs/WithSidebar'
+import TeachSection from '../../components/Organisms/TeachSection'
 
 const { TabPane } = Tabs
 

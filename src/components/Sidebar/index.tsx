@@ -82,7 +82,7 @@ const Sidebar: React.FC = () => {
     <StyledSider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={270}>
       <InnerLayout style={{ display: 'flex' }}>
         <SiderHeader>
-          <div
+          {/* <div
             style={{
               height: '50px',
               width: '50px',
@@ -96,10 +96,25 @@ const Sidebar: React.FC = () => {
             }}
           >
             PM
-          </div>
-          <p style={{ marginLeft: '10px', fontSize: '16px' }}>
-            {!collapsed ? 'Priyansh Mandloi' : ''}
-          </p>
+          </div> */}
+          <img
+            src='/schoollogo.png'
+            alt=''
+            style={{
+              height: '50px',
+              width: '50px',
+              background: '#4b65f6',
+              color: 'white',
+              borderRadius: '99px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px'
+            }}
+          />
+          <span style={{ marginLeft: '10px', fontSize: '16px', lineHeight: '21px'}}>
+            {!collapsed ? 'Chaudhary Chhotu Ram Public School' : ''}
+          </span>
         </SiderHeader>
         <StyledButton onClick={() => setCollapsed(!collapsed)}>
           {!collapsed ? <CloseOutlined /> : <DoubleRightOutlined />}
