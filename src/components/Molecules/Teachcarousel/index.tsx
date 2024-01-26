@@ -8,7 +8,7 @@ import axios from 'axios'
 
 const Container = styled.div`
   position: relative;
-  min-height: 252px !important;
+  /* min-height: 252px !important; */
   margin-top: 20px;
   border-radius: 12px;
   background-color: #5ab2a6;
@@ -33,6 +33,7 @@ const Blob = styled.svg`
 
 const Content = styled.span`
   position: relative;
+  flex: 1;
   z-index: 1;
   color: white;
   text-align: left;
@@ -78,7 +79,7 @@ const LeftContainer = styled.div`
   justify-self: flex-start;
 `
 const RightContainer = styled.div`
-  min-height: 100px;
+  /* min-height: 100px; */
   width: 65%;
   justify-self: flex-end;
   position: relative;

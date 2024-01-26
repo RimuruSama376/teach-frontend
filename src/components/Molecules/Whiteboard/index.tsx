@@ -4,9 +4,11 @@ import { useRef } from 'react'
 
 const Container = styled.div`
   display: flex;
-  flex: 4;
-  border-left: 2px #CCCCCC solid;
-  margin-left: 2px;
+  flex: 2;
+  margin-left: 10px;
+  @media (min-width: 1280px) {
+    border-left: 2px #cccccc solid;
+  }
 `
 const StyledButton = styled.button`
   height: fit-content;
@@ -23,11 +25,11 @@ const StyledButton = styled.button`
   bottom: 55px;
   right: 18px;
 
-  @media (max-width: 732px) {
+  @media (max-width: 1800px) {
     /* padding: ; */
     /* background-color: white; */
-    bottom: 19px;
-    left: 60px;
+    bottom: 18px;
+    right: 80px;
     border: 0;
   }
 `

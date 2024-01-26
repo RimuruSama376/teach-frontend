@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 const Container = styled.div`
   margin-left: 10px;
   overflow-x: hidden;
-  max-width: 500px;
+  /* max-width: 500px; */
   width: 100%;
   display: block;
   justify-self: center;
@@ -34,7 +34,7 @@ const Container = styled.div`
   .ant-carousel .slick-next,
   .ant-carousel .slick-next:hover {
     padding-top: 3px;
-    right: 25px;
+    right: 0px;
     z-index: 2;
     width: 20px;
     background-color: white;
@@ -45,11 +45,11 @@ const Container = styled.div`
 `
 
 const StyledCard = styled.div`
-  margin-left: 15px;
+  margin-left: 5px;
   margin-top: 15px;
   margin-right: 15px;
   height: 130px;
-  width: 120px;
+  width: 100%;
   /* border: 1px red solid; */
   display: flex;
   flex-direction: column;
@@ -65,18 +65,18 @@ const Top = styled.div`
   justify-content: center;
   align-items: flex-end;
   background-color: #d9d9d9;
-  width: 100%;
+  width: 120px;
   /* height: 100px; */
   border-radius: 8px;
   img {
     border: 3px black solid;
     border-bottom: 0;
   }
-`
+  `
 const Bottom = styled.div`
   margin-top: 7px;
+  width: 120px;
   flex: 1;
-  width: 100%;
   height: fit-content;
   display: flex;
   flex-direction: row;
@@ -121,7 +121,7 @@ const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ PDFs }) => {
     const handleResize = () => {
       const containerWidth = document?.querySelector('.pdf-carousel-container')?.clientWidth || 1
       const slideWidth = 130
-      const newSlidesToShow = Math.max(1, Math.floor(containerWidth / slideWidth))
+      const newSlidesToShow = Math.max(1, Math.floor(containerWidth / slideWidth) || 4)
 
       setSlidesToShow(Math.min(newSlidesToShow, 3))
     }

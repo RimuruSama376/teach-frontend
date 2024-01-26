@@ -9,6 +9,7 @@ const Container = styled.div`
   flex-direction: column;
   padding-top: 10px;
   height: 100% !important;
+  overflow: scroll;
 `
 
 interface TeachProps {
