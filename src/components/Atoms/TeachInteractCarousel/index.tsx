@@ -49,7 +49,6 @@ const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ title, urls }) =>
   const onChange = (currentSlide: number) => {
     console.log(currentSlide)
   }
-  console.log(urls.length)
   return (
     <Container>
       <Carousel

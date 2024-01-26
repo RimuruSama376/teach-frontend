@@ -1,7 +1,10 @@
 import styled from 'styled-components'
-import { Carousel } from 'antd'
+import { Carousel, Modal } from 'antd'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player'
+import { IChapter } from '../../../screens/Teach'
+import { useRef, useState } from 'react'
+import axios from 'axios'
 
 const Container = styled.div`
   position: relative;
@@ -61,23 +64,25 @@ const Content = styled.span`
     &:hover {
       background-color: #5ab2a6;
     }
+    &:disabled {
+      cursor: not-allowed;
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 `
 
 const LeftContainer = styled.div`
-  /* min-height: 252px; */
   width: 30%;
   justify-self: flex-start;
 `
 const RightContainer = styled.div`
-  /* min-height: 252px; */
   min-height: 100px;
-  /* max-height: 252px; */
   width: 65%;
   justify-self: flex-end;
   position: relative;
   z-index: 999;
-  /* display: flex; */
   flex-direction: row;
   h3 {
     margin: 0 !important;
@@ -105,7 +110,6 @@ const RightContainer = styled.div`
   }
 
   .slick-slide {
-    /* width: fit-content !important; */
     display: flex !important;
     flex-direction: row;
     justify-content: center;
@@ -120,19 +124,48 @@ const PlayerContainer = styled.div`
   display: flex;
   flex-direction: row;
   width: fit-content;
-  /* border: 2px green solid; */
   justify-content: center;
   align-items: center;
 `
 
 interface TeachCarouselProps {
-  title: string
-  urls: string[]
+  activeChapter: IChapter | undefined
+  handleAddContent: (s: string) => void
 }
 
-const TeachCarousel: React.FC<TeachCarouselProps> = ({ title, urls }) => {
+const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddContent }) => {
+  const [modalOpen, setModalOpen] = useState(false)
+  const linkRef = useRef<HTMLInputElement>(null)
+  const [isLinkValid, setIsLinkValid] = useState(true)
+
+  const onAddContent = async () => {
+    try {
+      const link = linkRef?.current?.value as string
+      const configuration = {
+        method: 'get',
+        url: `https://www.youtube.com/oembed?format=json&url=${link}`
+      }
+      const response = await axios(configuration)
+      console.log(response)
+      setIsLinkValid(true)
+      handleAddContent(link)
+      setModalOpen(false)
+    } catch (err) {
+      setIsLinkValid(false)
+    }
+  }
   return (
     <Container>
+      <Modal
+        title='Enter the youtube link'
+        centered
+        open={modalOpen}
+        onOk={onAddContent}
+        onCancel={() => setModalOpen(false)}
+      >
+        <input title='link' placeholder='www.youtube.com/...' ref={linkRef} />
+        {!isLinkValid ? <p style={{ color: 'red' }}>Please enter a valid link</p> : ''}
+      </Modal>
       <LeftContainer>
         <Blob
           width='305'
@@ -155,7 +188,12 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ title, urls }) => {
             Lorem ipsum dolor sit amet,
             <br /> consectetur.
           </p>
-          <button>Add</button>
+          <button
+            disabled={activeChapter?.chapterId === undefined}
+            onClick={() => setModalOpen(true)}
+          >
+            Add
+          </button>
         </Content>
         <svg
           width='23'
@@ -190,14 +228,9 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ title, urls }) => {
       </LeftContainer>
       <RightContainer>
         <Carousel arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />} dots={false}>
-          {urls.map((url, idx) => (
+          {activeChapter?.videos?.map((url, idx) => (
             <PlayerContainer key={idx}>
-              <ReactPlayer
-                url={url}
-                controls={true}
-                height={202}
-                width={360}
-              />
+              <ReactPlayer url={url} controls={true} height={202} width={360} />
             </PlayerContainer>
           ))}
         </Carousel>

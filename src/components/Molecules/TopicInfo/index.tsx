@@ -1,14 +1,15 @@
 import styled from 'styled-components'
-import { useState } from 'react'
-import { Select } from 'antd'
+import { useEffect, useRef, useState } from 'react'
+import { Button, Modal, Select, Skeleton } from 'antd'
 import TeachInteractCarousel from '../../Atoms/TeachInteractCarousel'
+import { IChapter, ITopic } from '../../../screens/Teach'
+import axios from 'axios'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   max-width: 50%;
   flex: 2;
-  border: 1px green solid;
   margin-right: 2px;
   overflow-x: hidden;
 `
@@ -16,7 +17,7 @@ const Topbar = styled.div`
   width: 100%;
   height: fit-content;
   align-items: center;
-  padding: 3px;
+  padding: 10px;
   display: flex;
   flex-direction: row;
   font-family: Nunito;
@@ -32,7 +33,7 @@ const Topbar = styled.div`
   .ant-select {
     /* background-color: black !important; */
     min-width: 120px;
-    max-width: 200px;
+    max-width: 250px;
     text-align: left;
     .ant-select-selector {
       border: 0 !important;
@@ -64,34 +65,127 @@ const StyledTextArea = styled.textarea`
   border: 0px solid #ccc; // A subtle border
   padding: 10px;
   resize: none; // Prevent resizing
-  
+
   &:disabled {
     background: white; // Keeps background white when disabled
     color: black; // Ensures text color remains black
     border-color: #ccc; // Keeps the border color consistent
   }
 `
+const CardSkeleton = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+`
 
-const items = [
-  {
-    value: 'jack',
-    label: 'Jack'
-  },
-  {
-    value: 'lucy',
-    label: 'Lucy'
-  },
-  {
-    value: 'tom',
-    label: 'Tom'
+const StyledModal = styled(Modal)`
+  .ant-modal-header .ant-modal-title {
+    font-size: 20px;
   }
-]
+  .ant-select {
+    /* background-color: black !important; */
+    /* min-width: 120px;
+    max-width: 250px; */
+    width: 100%;
+    text-align: left;
 
-function TopicInfo() {
-  const [activeTopic, setActiveTopic] = useState(items[0]?.label)
+    .ant-select-selection-item {
+      font-size: 18px;
+    }
+    .ant-select-arrow {
+      svg {
+        fill: black;
+      }
+    }
+  }
+  .ant-modal-footer {
+    button {
+      border-radius: 24px;
+      text-align: center;
+      height: 41px;
+      span {
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+  }
+`
+
+const ModalInputContainer = styled.div`
+  margin-top: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  min-height: 200px;
+  justify-content: space-between;
+`
+
+const ModalInput = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px #808080 solid;
+  border-radius: 4px;
+  width: 47%;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+  &:hover {
+    background-color: #eff1fe;
+    border-color: #7c90ff;
+  }
+  button {
+    background-color: white;
+    border: 1px #808080 solid;
+    height: 42px;
+    width: 42px;
+    cursor: pointer;
+  }
+  p {
+    font-size: 12px;
+    text-align: center;
+  }
+`
+
+interface TopicInfoProps {
+  activeChapter: IChapter | undefined
+}
+
+interface ICurrentTopic extends ITopic {
+  description: string
+  PDFs: string[]
+}
+
+const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
+  const [topics, setTopics] = useState<ITopic[]>([])
+  const [activeTopic, setActiveTopic] = useState<ITopic>()
+  const [currentTopic, setCurrentTopic] = useState<ICurrentTopic>()
   const [isEditable, setIsEditable] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [textAreaValue, setTextAreaValue] = useState<string>('')
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  useEffect(() => {
+    console.log('myLog ,', activeChapter)
+    setTopics([])
+    setActiveTopic(undefined)
+    setTextAreaValue('')
+    setCurrentTopic(undefined)
+    if (activeChapter?.topics?.length) {
+      setIsLoading(true)
+      setTopics(activeChapter.topics)
+      setActiveTopic(activeChapter.topics[0])
+    }
+  }, [activeChapter])
+
+  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextAreaValue(e.target.value)
+  }
   const onChange = (value: string) => {
-    console.log(`selected ${value}`)
+    setActiveTopic(topics.find((c) => c.topicId === value))
   }
 
   const onSearch = (value: string) => {
@@ -101,6 +195,67 @@ function TopicInfo() {
   // Filter `option.label` match the user type `input`
   const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+
+  const getDropDownTopics = (topics: ITopic[]): { value: string; label: string }[] => {
+    return topics.map((c) => {
+      return { value: c.topicId, label: c.name }
+    })
+  }
+
+  useEffect(() => {
+    const getTopicDetails = async () => {
+      try {
+        setIsLoading(true)
+        const configuration = {
+          method: 'get',
+          url: `http://localhost:8000/get-topic/?id=${activeTopic?.topicId}`
+        }
+        const response = await axios(configuration)
+        console.log(response.data)
+        setCurrentTopic(response.data)
+        setTextAreaValue(response.data.description)
+        setIsLoading(false)
+      } catch (error) {
+        setIsLoading(false)
+        console.log('something went wrong: ', error)
+      }
+    }
+    if (activeTopic?.topicId) {
+      getTopicDetails()
+    }
+  }, [activeTopic])
+
+  useEffect(() => {
+    if (isEditable && textAreaRef.current) {
+      const textArea = textAreaRef.current
+      textArea.focus()
+
+      const length = textArea.value.length
+      textArea.setSelectionRange(length, length)
+    }
+  }, [isEditable])
+
+  const toggleIsEditable = async () => {
+    if (isEditable && currentTopic?.description !== textAreaValue) {
+      try {
+        const configuration = {
+          method: 'patch',
+          url: `http://localhost:8000/update-topic-description/?id=${currentTopic?.topicId}`,
+          data: {
+            description: textAreaValue
+          }
+        }
+        const response = await axios(configuration)
+        console.log(response.data)
+        setCurrentTopic(response.data)
+        setTextAreaValue(response.data.description)
+      } catch (error) {
+        console.log('something went wrong: ', error)
+      }
+    }
+    setIsEditable((state) => !state)
+  }
+
   return (
     <Container>
       {/* topbar */}
@@ -112,9 +267,11 @@ function TopicInfo() {
           onChange={onChange}
           onSearch={onSearch}
           filterOption={filterOption}
-          options={items}
+          options={getDropDownTopics(topics)}
+          value={activeTopic?.topicId}
+          disabled={!activeChapter || isLoading}
         />
-        <StyledButton onClick={() => setIsEditable(state => !state)}>
+        <StyledButton onClick={toggleIsEditable} disabled={isLoading}>
           <svg
             width='24'
             height='24'
@@ -125,29 +282,29 @@ function TopicInfo() {
             <path
               d='M11.5 4.20996H9.83333C5.66667 4.20996 4 5.87663 4 10.0433V15.0433C4 19.21 5.66667 20.8766 9.83333 20.8766H14.8333C19 20.8766 20.6667 19.21 20.6667 15.0433V13.3766'
               stroke={isEditable ? '#5AB2A6' : '#808080'}
-              stroke-width='1.5'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeWidth='1.5'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
             <path
               d='M15.6996 5.05936L9.13291 11.626C8.88291 11.876 8.63291 12.3677 8.58291 12.726L8.22457 15.2344C8.09124 16.1427 8.73291 16.776 9.64124 16.651L12.1496 16.2927C12.4996 16.2427 12.9912 15.9927 13.2496 15.7427L19.8162 9.17602C20.9496 8.04269 21.4829 6.72602 19.8162 5.05936C18.1496 3.39269 16.8329 3.92602 15.6996 5.05936Z'
               stroke={isEditable ? '#5AB2A6' : '#808080'}
-              stroke-width='1.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeWidth='1.5'
+              strokeMiterlimit='10'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
             <path
               d='M14.7578 6.00098C15.3161 7.99264 16.8745 9.55098 18.8745 10.1176'
               stroke={isEditable ? '#5AB2A6' : '#808080'}
-              stroke-width='1.5'
-              stroke-miterlimit='10'
-              stroke-linecap='round'
-              stroke-linejoin='round'
+              strokeWidth='1.5'
+              strokeMiterlimit='10'
+              strokeLinecap='round'
+              strokeLinejoin='round'
             />
           </svg>
         </StyledButton>
-        <StyledButton>
+        <StyledButton disabled={isLoading}>
           <svg
             width='24'
             height='24'
@@ -161,7 +318,7 @@ function TopicInfo() {
             />
           </svg>
         </StyledButton>
-        <StyledButton>
+        <StyledButton onClick={() => setIsModalOpen(true)} disabled={isLoading}>
           <svg
             width='144'
             height='36'
@@ -182,13 +339,93 @@ function TopicInfo() {
           </svg>
         </StyledButton>
       </Topbar>
-      {/* files carousel */}
-      <TeachInteractCarousel title={''} urls={[' ', '', '', '']} />
-      {/* description */}
-      <StyledTextArea 
-        disabled={!isEditable}
-        placeholder=""
-      />
+      {isLoading ? (
+        <CardSkeleton>
+          <Skeleton.Button active style={{ width: '150px', height: '140px' }}></Skeleton.Button>
+          <Skeleton.Button active style={{ width: '150px', height: '140px' }}></Skeleton.Button>
+          <Skeleton.Button active style={{ width: '150px', height: '140px' }}></Skeleton.Button>
+        </CardSkeleton>
+      ) : (
+        <TeachInteractCarousel title={''} urls={currentTopic?.PDFs ? currentTopic.PDFs : []} />
+      )}
+      {isLoading ? (
+        <div style={{ margin: '10px' }}>
+          <Skeleton
+            title={false}
+            active
+            paragraph={{
+              rows: 10,
+              width: Array(10).fill('100%')
+            }}
+          />
+        </div>
+      ) : (
+        <StyledTextArea
+          disabled={!isEditable}
+          placeholder=''
+          value={textAreaValue}
+          ref={textAreaRef}
+          onChange={handleTextAreaChange}
+          style={{ border: isEditable ? '1px blue solid' : '0' }}
+        />
+      )}
+      <StyledModal
+        title='Add Content'
+        centered
+        open={isModalOpen}
+        onOk={() => setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
+        style={{
+          maxHeight: '413px',
+          maxWidth: '342px'
+        }}
+        okText={
+          <>
+            <svg
+              width='14'
+              height='15'
+              viewBox='0 -1 14 15'
+              fill='none'
+              xmlns='http://www.w3.org/2000/svg'
+            >
+              <path d='M1 7.5H13' stroke='white' stroke-width='2' stroke-linecap='round' />
+              <path d='M7 13.5L7 1.5' stroke='white' stroke-width='2' stroke-linecap='round' />
+            </svg>
+            {'  '}Add Content
+          </>
+        }
+        // okButtonProps={}
+      >
+        <p style={{ fontSize: '18px', color: '#525252', marginBottom: '10px' }}>Topic Name</p>
+        <Select
+          showSearch
+          placeholder='Topic Name'
+          optionFilterProp='children'
+          onChange={onChange}
+          onSearch={onSearch}
+          filterOption={filterOption}
+          options={getDropDownTopics(topics)}
+          value={activeTopic?.topicId}
+          disabled={!activeChapter || isLoading}
+        />
+        <ModalInputContainer>
+          <ModalInput onClick={() => {
+              setIsModalOpen(false)
+              setIsEditable(true)
+            }}>
+            <button >
+              <img src='/inputtext.png' alt='' />
+            </button>
+            <p>Type your own personalized content</p>
+          </ModalInput>
+          <ModalInput>
+            <button>
+              <img src='/inputfile.png' alt='' />
+            </button>
+            <p>Upload a pdf of your content</p>
+          </ModalInput>
+        </ModalInputContainer>
+      </StyledModal>
     </Container>
   )
 }

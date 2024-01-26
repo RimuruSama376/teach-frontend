@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import TopicInfo from '../TopicInfo'
 import Whiteboard from '../Whiteboard'
+import { IChapter } from '../../../screens/Teach'
 
 const Container = styled.div`
   display: flex;
@@ -10,10 +11,14 @@ const Container = styled.div`
   /* flex-grow: 1; */
 `
 
-function TeachInteract() {
+interface TeachProps {
+  activeChapter: IChapter | undefined
+}
+
+const TeachInteract: React.FC<TeachProps> = ({ activeChapter }) => {
   return (
     <Container>
-      <TopicInfo></TopicInfo>
+      <TopicInfo activeChapter={activeChapter}></TopicInfo>
       <Whiteboard></Whiteboard>
     </Container>
   )

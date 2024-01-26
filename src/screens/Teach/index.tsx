@@ -1,8 +1,10 @@
-import { Tabs } from 'antd'
+import { Tabs, Select } from 'antd'
 import { SearchOutlined, DownloadOutlined, ShareAltOutlined, LeftOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
 import withSidebarLayout from '../../components/HOCs/WithSidebar'
 import TeachSection from '../../components/Organisms/TeachSection'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const { TabPane } = Tabs
 
@@ -83,7 +85,87 @@ const StyledTopBar = styled.div`
   }
 `
 
+export interface ITopic {
+  name: string
+  topicId: string
+}
+
+export interface IChapter {
+  chapterId: string
+  name: string
+  id: string
+  videos?: string[]
+  topics?: ITopic[]
+}
+
 const MyTabs = () => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const [chapters, setChapters] = useState<IChapter[]>([])
+  const [activeChapter, setActiveChapter] = useState<IChapter>()
+
+  const onChange = (value: string) => {
+    setActiveChapter(chapters.find((c) => c.chapterId === value))
+  }
+
+  const onSearch = (value: string) => {
+    console.log('search:', value)
+  }
+  const filterOption = (input: string, option?: { label: string; value: string }) =>
+    (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+
+  useEffect(() => {
+    const getChapters = async () => {
+      try {
+        const configuration = {
+          method: 'get',
+          url: 'http://localhost:8000/get-chapters'
+        }
+        const response = await axios(configuration)
+        if (response.data.length) {
+          setChapters(response.data)
+          setActiveChapter(response.data[0])
+        }
+        setIsLoading(false)
+      } catch (err) {
+        setIsLoading(false)
+        setHasError(true)
+      }
+    }
+    getChapters()
+  }, [])
+
+  const getDropDownChapters = (chapters: IChapter[]): { value: string; label: string }[] => {
+    return chapters.map((c) => {
+      return { value: c.chapterId, label: c.name }
+    })
+  }
+
+  const handleAddContent = async (videoLink: string) => {
+    try {
+      const configuration = {
+        method: 'patch',
+        url: `http://localhost:8000/add-video-content/?id=${activeChapter?.chapterId}`,
+        data: {
+          videoLink
+        }
+      }
+      const response = await axios(configuration)
+      if (response.data) {
+        setActiveChapter(response.data)
+        setChapters((state) => {
+          const prevState = state
+          const idx = prevState.findIndex((c) => c.chapterId === activeChapter?.chapterId)
+          if (idx !== -1) prevState[idx] = response.data
+          return prevState
+        })
+      }
+    } catch (err) {
+      setHasError(true)
+    }
+    return true
+  }
+
   return (
     <>
       <TabsContainer>
@@ -91,7 +173,17 @@ const MyTabs = () => {
           <div>
             <>
               <LeftOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
-              <ChapterName>Chapter Name</ChapterName>
+              <Select
+                showSearch
+                placeholder='Topic Name'
+                optionFilterProp='children'
+                onChange={onChange}
+                onSearch={onSearch}
+                filterOption={filterOption}
+                options={getDropDownChapters(chapters)}
+                value={activeChapter?.chapterId}
+                disabled={isLoading}
+              />
             </>
           </div>
           <div>
@@ -112,7 +204,17 @@ const MyTabs = () => {
             left: (
               <>
                 <LeftOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
-                <ChapterName>Chapter Name</ChapterName>
+                <Select
+                  showSearch
+                  placeholder='Topic Name'
+                  optionFilterProp='children'
+                  onChange={onChange}
+                  onSearch={onSearch}
+                  filterOption={filterOption}
+                  options={getDropDownChapters(chapters)}
+                  value={activeChapter?.chapterId}
+                  disabled={isLoading}
+                />
               </>
             ),
             right: (
@@ -132,7 +234,7 @@ const MyTabs = () => {
         >
           <StyledTabPane tab='Teach' key='1'>
             {/* Content for Teach tab */}
-            <TeachSection />
+            <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />
           </StyledTabPane>
           <StyledTabPane tab='Worksheet' key='2'>
             {/* Content for Worksheet tab */}

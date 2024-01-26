@@ -5,7 +5,7 @@ import { useRef } from 'react'
 const Container = styled.div`
   display: flex;
   flex: 4;
-  border: 1px green solid;
+  border-left: 2px #CCCCCC solid;
   margin-left: 2px;
 `
 const StyledButton = styled.button`
@@ -61,9 +61,9 @@ function Whiteboard() {
           <path
             d='M15.75 15.75L11.25 11.25M15.75 15.75V12.15M15.75 15.75H12.15M2.25 12.15V15.75M2.25 15.75H5.85M2.25 15.75L6.75 11.25M15.75 5.85V2.25M15.75 2.25H12.15M15.75 2.25L11.25 6.75M2.25 5.85V2.25M2.25 2.25H5.85M2.25 2.25L6.75 6.75'
             stroke='#8C8C8C'
-            stroke-width='2'
-            stroke-linecap='round'
-            stroke-linejoin='round'
+            strokeWidth='2'
+            strokeLinecap='round'
+            strokeLinejoin='round'
           />
         </svg>
       </StyledButton>
