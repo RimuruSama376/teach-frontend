@@ -10,6 +10,7 @@ const { TabPane } = Tabs
 
 // Styled components
 const TabsContainer = styled.div`
+  font-family: 'Nunito', sans-serif !important;
   height: 100%;
   padding: 10px;
   padding-bottom: 0;
@@ -17,12 +18,14 @@ const TabsContainer = styled.div`
   padding-left: 40px;
   padding-right: 40px;
   .ant-tabs {
+    font-family: 'Nunito', sans-serif;
     height: 100%;
   }
   .ant-tabs-nav {
     margin: 0;
   }
   .ant-tabs-tab {
+    font-family: 'Nunito', sans-serif;
     font-size: 14px;
     font-weight: 600;
     padding: 5px 0px 10px 0px;
@@ -47,6 +50,7 @@ const TabsContainer = styled.div`
     background-color: #4b65f6;
   }
   .ant-tabs-content {
+    font-family: 'Nunito', sans-serif;
     height: 100%;
     .ant-tabs-tabpane {
       height: 100%;
@@ -60,21 +64,15 @@ const TabsContainer = styled.div`
   }
 `
 
-const ChapterName = styled.span`
-  margin-right: auto;
-  padding-left: 16px;
-  font-size: 20px;
-  font-weight: 700;
-  height: 100%;
-`
-
 const StyledTabPane = styled(TabPane)`
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
   height: 100%;
 `
 
 const StyledTopBar = styled.div`
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

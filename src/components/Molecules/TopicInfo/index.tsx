@@ -6,6 +6,7 @@ import { IChapter, ITopic } from '../../../screens/Teach'
 import axios from 'axios'
 
 const Container = styled.div`
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
   max-width: 50%;
@@ -14,6 +15,7 @@ const Container = styled.div`
   overflow-x: hidden;
 `
 const Topbar = styled.div`
+  font-family: 'Nunito', sans-serif;
   width: 100%;
   height: fit-content;
   align-items: center;
@@ -32,6 +34,7 @@ const Topbar = styled.div`
 
   .ant-select {
     /* background-color: black !important; */
+    font-family: 'Nunito', sans-serif;
     min-width: 120px;
     max-width: 250px;
     text-align: left;
@@ -58,6 +61,7 @@ const StyledButton = styled.button`
 
 const StyledTextArea = styled.textarea`
   /* width: 100%; */
+  font-family: 'Nunito', sans-serif;
   flex: 2;
   margin: 11px;
   margin-bottom: 1px;
@@ -409,11 +413,13 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
           disabled={!activeChapter || isLoading}
         />
         <ModalInputContainer>
-          <ModalInput onClick={() => {
+          <ModalInput
+            onClick={() => {
               setIsModalOpen(false)
               setIsEditable(true)
-            }}>
-            <button >
+            }}
+          >
+            <button>
               <img src='/inputtext.png' alt='' />
             </button>
             <p>Type your own personalized content</p>

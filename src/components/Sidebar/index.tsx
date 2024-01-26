@@ -24,11 +24,13 @@ import {
 const { Header, Sider } = Layout
 
 const InnerLayout = styled(Layout)`
+  font-family: 'Nunito', sans-serif;
   height: 100vh;
   background-color: white !important;
   display: flex;
   flex-direction: column;
   li {
+    font-family: 'Nunito', sans-serif;
     color: gray;
     background-color: white !important;
     .ant-menu-title-content {
@@ -38,12 +40,14 @@ const InnerLayout = styled(Layout)`
 `
 
 const StyledSider = styled(Sider)`
+  font-family: 'Nunito', sans-serif;
   background-color: white !important;
   /* border-right: 1px red solid; */
   box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.3);
 `
 
 const SiderHeader = styled(Header)`
+  font-family: 'Nunito', sans-serif;
   padding: 10px;
   background-color: white !important;
   display: flex;
@@ -52,6 +56,7 @@ const SiderHeader = styled(Header)`
 `
 
 const SiderFooter = styled(Header)`
+  font-family: 'Nunito', sans-serif;
   padding: 10px;
   padding-right: 0;
   background-color: white !important;
@@ -64,6 +69,7 @@ const SiderFooter = styled(Header)`
 `
 
 const StyledButton = styled.button`
+  font-family: 'Nunito', sans-serif;
   padding-top: 14px;
   padding-left: 21px;
   padding-bottom: 9px;
@@ -71,6 +77,7 @@ const StyledButton = styled.button`
   width: fit-content;
   border: 0px;
   span {
+    font-family: 'Nunito', sans-serif;
     margin-left: 8px;
   }
 `
@@ -112,7 +119,7 @@ const Sidebar: React.FC = () => {
               fontSize: '18px'
             }}
           />
-          <span style={{ marginLeft: '10px', fontSize: '16px', lineHeight: '21px'}}>
+          <span style={{ marginLeft: '10px', fontSize: '16px', lineHeight: '21px' }}>
             {!collapsed ? 'Chaudhary Chhotu Ram Public School' : ''}
           </span>
         </SiderHeader>

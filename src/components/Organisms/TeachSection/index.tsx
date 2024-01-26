@@ -4,6 +4,7 @@ import TeachInteract from '../../Molecules/TeachInteract'
 import { IChapter } from '../../../screens/Teach'
 
 const Container = styled.div`
+  font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
   padding-top: 10px;
@@ -18,8 +19,8 @@ interface TeachProps {
 const TeachSection: React.FC<TeachProps> = ({ activeChapter, handleAddContent }) => {
   return (
     <Container>
-      <TeachCarousel activeChapter={activeChapter} handleAddContent={handleAddContent}/>
-      <TeachInteract activeChapter={activeChapter}/>
+      <TeachCarousel activeChapter={activeChapter} handleAddContent={handleAddContent} />
+      <TeachInteract activeChapter={activeChapter} />
     </Container>
   )
 }
