@@ -9,8 +9,8 @@ const Container = styled.div`
   font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
-  /* max-width: 50%; */
   flex: 1;
+  flex-grow: 1;
   margin-right: 2px;
   overflow-x: hidden;
 `

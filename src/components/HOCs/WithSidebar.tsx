@@ -3,12 +3,16 @@ import { Layout } from 'antd'
 import styled from 'styled-components'
 
 import Sidebar from '../Sidebar'
+import NavBar from '../NavBar'
 
-const { Content } = Layout
-
-const StyledLayout = styled(Layout)`
-  max-height: 100vh;
-  background-color: white !important;
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: 801px) {
+    /* display: none !important; */
+    /* position: absolute;  */
+  }
 `
 
 interface WithSidebarLayoutProps {}
@@ -16,18 +20,13 @@ interface WithSidebarLayoutProps {}
 function withSidebarLayout<P>(WrappedComponent: ComponentType<P>) {
   const WithSidebar: FC<P & WithSidebarLayoutProps> = (props) => {
     return (
-      <StyledLayout>
-        <Sidebar />
-        <Content
-          style={{
-            minHeight: 280,
-            background: 'white',
-            borderRadius: 0,
-          }}
-        >
+      <Container style={{ display: 'flex' }}>
+        <Container style={{ display: 'flex', flexDirection: 'row' }}>
+          <Sidebar />
           <WrappedComponent {...props} />
-        </Content>
-      </StyledLayout>
+        </Container>
+        <NavBar />
+      </Container>
     )
   }
 

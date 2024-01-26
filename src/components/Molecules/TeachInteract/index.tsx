@@ -5,11 +5,12 @@ import { IChapter } from '../../../screens/Teach'
 import { useState } from 'react'
 
 const Container = styled.div`
+  /* border: 10px red solid !important; */
   display: flex;
   flex-direction: row;
   flex: 2;
   margin-top: 20px;
-  /* flex-grow: 1; */
+  flex-grow: 1;
   @media (max-width: 1280px) {
     display: none;
   }
@@ -47,7 +48,7 @@ const TeachInteract: React.FC<TeachProps> = ({ activeChapter }) => {
   const toggleView = () => setShowTopicInfo(!showTopicInfo)
   return (
     <>
-      <Container>
+      <Container className='teachinteract'>
         <TopicInfo activeChapter={activeChapter}></TopicInfo>
         <Whiteboard></Whiteboard>
       </Container>

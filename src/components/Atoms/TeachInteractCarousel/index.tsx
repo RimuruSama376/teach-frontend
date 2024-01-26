@@ -50,7 +50,6 @@ const StyledCard = styled.div`
   margin-right: 15px;
   height: 130px;
   width: 100%;
-  /* border: 1px red solid; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

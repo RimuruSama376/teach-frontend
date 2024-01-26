@@ -10,16 +10,30 @@ const { TabPane } = Tabs
 
 // Styled components
 const TabsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   font-family: 'Nunito', sans-serif !important;
-  height: 100%;
+  flex-grow: 1;
   padding: 10px;
   padding-bottom: 0;
   /* margin-bottom: 20px; */
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 30px;
+  padding-right: 30px;
   .ant-tabs {
     font-family: 'Nunito', sans-serif;
-    height: 100%;
+    flex-grow: 1;
+  }
+  .ant-tabs-content-holder {
+    display: flex;
+    .ant-tabs-content-top {
+      display: flex;
+      .ant-tabs-tabpane {
+        display: flex;
+        width: 100%;
+        /* border: 2px green solid; */
+        min-height: 100px;
+      }
+    }
   }
   .ant-tabs-nav {
     margin: 0;
@@ -32,7 +46,6 @@ const TabsContainer = styled.div`
     color: #cccccc;
   }
   .ant-tabs-tab-active {
-    /* padding: 5px 0px 10px 0px; */
     div {
       color: black !important;
     }
@@ -40,7 +53,9 @@ const TabsContainer = styled.div`
   .ant-tabs-nav-wrap {
     /* padding: 12px 16px; */
     display: flex;
-    justify-content: center;
+    @media (min-width: 930px) {
+      justify-content: center;
+    }
   }
   .ant-tabs-tab:hover {
     color: #1890ff;
@@ -51,9 +66,7 @@ const TabsContainer = styled.div`
   }
   .ant-tabs-content {
     font-family: 'Nunito', sans-serif;
-    height: 100%;
     .ant-tabs-tabpane {
-      height: 100%;
     }
   }
   .ant-tabs-extra-content {
@@ -68,7 +81,6 @@ const StyledTabPane = styled(TabPane)`
   font-family: 'Nunito', sans-serif;
   display: flex;
   flex-direction: column;
-  height: 100%;
 `
 
 const StyledTopBar = styled.div`
@@ -106,8 +118,7 @@ const MyTabs = () => {
     setActiveChapter(chapters.find((c) => c.chapterId === value))
   }
 
-  const onSearch = (value: string) => {
-  }
+  const onSearch = (value: string) => {}
   const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 
@@ -186,12 +197,14 @@ const MyTabs = () => {
           </div>
           <div>
             <>
-              <SearchOutlined style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer' }} />
+              <SearchOutlined
+                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer', marginTop: '5px' }}
+              />
               <DownloadOutlined
-                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer' }}
+                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer', marginTop: '5px' }}
               />
               <ShareAltOutlined
-                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer' }}
+                style={{ padding: '0 16px', fontSize: '16px', cursor: 'pointer', marginTop: '5px' }}
               />
             </>
           </div>
@@ -231,13 +244,11 @@ const MyTabs = () => {
             )
           }}
         >
-          <StyledTabPane tab='Teach' key='1'>
+          <StyledTabPane tab='Teach' key='1' className='getThis'>
             <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />
           </StyledTabPane>
-          <StyledTabPane tab='Worksheet' key='2'>
-          </StyledTabPane>
-          <StyledTabPane tab='Mind-Map' key='3'>
-          </StyledTabPane>
+          <StyledTabPane tab='Worksheet' key='2'></StyledTabPane>
+          <StyledTabPane tab='Mind-Map' key='3'></StyledTabPane>
         </Tabs>
       </TabsContainer>
     </>

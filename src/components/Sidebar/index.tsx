@@ -1,15 +1,6 @@
 import React, { useState } from 'react'
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  UserOutlined,
-  VideoCameraOutlined,
-  CloseOutlined,
-  DoubleRightOutlined,
-  HomeOutlined
-} from '@ant-design/icons'
-import { Layout, Menu, Button, theme } from 'antd'
+import { CloseOutlined, DoubleRightOutlined } from '@ant-design/icons'
+import { Layout, Menu } from 'antd'
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
@@ -40,6 +31,11 @@ const InnerLayout = styled(Layout)`
   li:nth-of-type(1) {
     font-weight: 700;
   }
+  @media (max-width: 800px) {
+    /* display: none !important; */
+    /* position: absolute;
+    heigh: 200px; */
+  }
 `
 
 const StyledSider = styled(Sider)`
@@ -47,6 +43,12 @@ const StyledSider = styled(Sider)`
   background-color: white !important;
   /* border-right: 1px red solid; */
   box-shadow: 2px 0px 8px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 800px) {
+    display: none;
+    position: absolute;
+    /* heigh: 200px; */
+  }
 `
 
 const SiderHeader = styled(Header)`
@@ -89,8 +91,9 @@ const StyledButton = styled.button`
   }
 `
 
+
 const Sidebar: React.FC = () => {
-  const [collapsed, setCollapsed] = useState(false)
+  const [collapsed, setCollapsed] = useState(true)
 
   return (
     <StyledSider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={270}>
@@ -111,7 +114,9 @@ const Sidebar: React.FC = () => {
               fontSize: '18px'
             }}
           />
-          <span style={{ marginLeft: '10px', fontSize: '16px', lineHeight: '21px' }}>
+          <span
+            style={{ marginLeft: '10px', fontSize: '16px', lineHeight: '21px', textAlign: 'left' }}
+          >
             {!collapsed ? 'Chaudhary Chhotu Ram Public School' : ''}
           </span>
         </SiderHeader>
