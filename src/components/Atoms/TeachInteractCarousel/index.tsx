@@ -170,8 +170,7 @@ const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ PDFs }) => {
                         />
                       </svg>
                       <p>
-                        {p.name}This is a long text that will be truncated after two lines if it
-                        overflows the specified width.
+                        {p.name}
                       </p>
                       <button onClick={() => { openPdf(p.filename)}}>
                         <svg

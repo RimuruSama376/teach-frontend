@@ -226,7 +226,7 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
           <circle cx='11.5' cy='7.5' r='11.5' fill='#FEC63D' />
         </svg>
       </LeftContainer>
-      {/* <RightContainer>
+      <RightContainer>
         <Carousel arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />} dots={false}>
           {activeChapter?.videos?.map((url, idx) => (
             <PlayerContainer key={idx}>
@@ -234,7 +234,7 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
             </PlayerContainer>
           ))}
         </Carousel>
-      </RightContainer> */}
+      </RightContainer>
     </Container>
   )
 }
