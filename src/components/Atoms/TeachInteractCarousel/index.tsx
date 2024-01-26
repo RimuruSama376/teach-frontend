@@ -135,7 +135,7 @@ const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ PDFs }) => {
     }
   }, [])
   const openPdf = (filename: string) =>{
-    window.open(`http://localhost:8000/files/${filename}`, "_blank", "noreferrer")
+    window.open(`https://teach-backend.onrender.com/files/${filename}`, "_blank", "noreferrer")
   }
   return (
     <Container className='dafdsfaf'>

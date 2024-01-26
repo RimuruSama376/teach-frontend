@@ -116,7 +116,7 @@ const MyTabs = () => {
       try {
         const configuration = {
           method: 'get',
-          url: 'http://localhost:8000/get-chapters'
+          url: 'https://teach-backend.onrender.com/get-chapters'
         }
         const response = await axios(configuration)
         if (response.data.length) {
@@ -142,7 +142,7 @@ const MyTabs = () => {
     try {
       const configuration = {
         method: 'patch',
-        url: `http://localhost:8000/add-video-content/?id=${activeChapter?.chapterId}`,
+        url: `https://teach-backend.onrender.com/add-video-content/?id=${activeChapter?.chapterId}`,
         data: {
           videoLink
         }
