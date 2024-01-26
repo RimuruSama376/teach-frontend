@@ -1,12 +1,21 @@
-import './App.css';
+import './App.css'
 import MyTabs from './screens/Teach'
+import { ConfigProvider } from 'antd'
 
 function App() {
   return (
-    <div className="App">
-      <MyTabs />
-    </div>
-  );
+    <ConfigProvider
+      theme={{
+        token: {
+          fontFamily: 'Nunito'
+        }
+      }}
+    >
+      <div className='App'>
+        <MyTabs />
+      </div>
+    </ConfigProvider>
+  )
 }
 
-export default App;
+export default App

@@ -31,11 +31,14 @@ const InnerLayout = styled(Layout)`
   flex-direction: column;
   li {
     font-family: 'Nunito', sans-serif;
-    color: gray;
-    background-color: white !important;
+    color: #909395;
+    background-color: white;
     .ant-menu-title-content {
       text-align: left;
     }
+  }
+  li:nth-of-type(1) {
+    font-weight: 700;
   }
 `
 
@@ -77,8 +80,12 @@ const StyledButton = styled.button`
   width: fit-content;
   border: 0px;
   span {
+    color: #909395;
     font-family: 'Nunito', sans-serif;
     margin-left: 8px;
+  }
+  span svg path {
+    stroke: #909395;
   }
 `
 
@@ -89,21 +96,6 @@ const Sidebar: React.FC = () => {
     <StyledSider collapsed={collapsed} onCollapse={(value) => setCollapsed(value)} width={270}>
       <InnerLayout style={{ display: 'flex' }}>
         <SiderHeader>
-          {/* <div
-            style={{
-              height: '50px',
-              width: '50px',
-              background: '#4b65f6',
-              color: 'white',
-              borderRadius: '99px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '18px'
-            }}
-          >
-            PM
-          </div> */}
           <img
             src='/schoollogo.png'
             alt=''
@@ -125,7 +117,7 @@ const Sidebar: React.FC = () => {
         </SiderHeader>
         <StyledButton onClick={() => setCollapsed(!collapsed)}>
           {!collapsed ? <CloseOutlined /> : <DoubleRightOutlined />}
-          <span>{!collapsed ? 'Collapse' : ''}</span>
+          <span style={{ color: '#909395' }}>{!collapsed ? 'Collapse' : ''}</span>
         </StyledButton>
         <Menu
           theme='light'

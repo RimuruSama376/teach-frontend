@@ -159,7 +159,10 @@ interface TopicInfoProps {
 
 interface ICurrentTopic extends ITopic {
   description: string
-  PDFs: string[]
+  PDFs: {
+    name: string
+    filename: string
+  }[]
 }
 
 const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
@@ -171,9 +174,10 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
   const [textAreaValue, setTextAreaValue] = useState<string>('')
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [file, setFile] = useState<any>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    console.log('myLog ,', activeChapter)
     setTopics([])
     setActiveTopic(undefined)
     setTextAreaValue('')
@@ -192,9 +196,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
     setActiveTopic(topics.find((c) => c.topicId === value))
   }
 
-  const onSearch = (value: string) => {
-    console.log('search:', value)
-  }
+  const onSearch = (value: string) => {}
 
   // Filter `option.label` match the user type `input`
   const filterOption = (input: string, option?: { label: string; value: string }) =>
@@ -215,7 +217,6 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
           url: `http://localhost:8000/get-topic/?id=${activeTopic?.topicId}`
         }
         const response = await axios(configuration)
-        console.log(response.data)
         setCurrentTopic(response.data)
         setTextAreaValue(response.data.description)
         setIsLoading(false)
@@ -250,7 +251,6 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
           }
         }
         const response = await axios(configuration)
-        console.log(response.data)
         setCurrentTopic(response.data)
         setTextAreaValue(response.data.description)
       } catch (error) {
@@ -260,8 +260,35 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
     setIsEditable((state) => !state)
   }
 
+  const handleButtonClick = () => {
+    fileInputRef?.current?.click()
+  }
+
+  const handleFileUpload = async () => {
+    if (!file) return
+    const formData = new FormData()
+    formData.append('name', file.name)
+    formData.append('file', file)
+    console.log(formData)
+    try {
+      const configuration = {
+        method: 'post',
+        url: `http://localhost:8000/add-pdf/?id=${activeTopic?.topicId}`,
+        data: formData,
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      const response = await axios(configuration)
+      setCurrentTopic(response.data.updatedTopic)
+    } catch (err) {
+      console.log(err)
+    }
+    setIsModalOpen(false)
+  }
+
   return (
-    <Container>
+    <Container className='pdf-carousel-container'>
       {/* topbar */}
       <Topbar>
         <Select
@@ -350,7 +377,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
           <Skeleton.Button active style={{ width: '150px', height: '140px' }}></Skeleton.Button>
         </CardSkeleton>
       ) : (
-        <TeachInteractCarousel title={''} urls={currentTopic?.PDFs ? currentTopic.PDFs : []} />
+        <TeachInteractCarousel PDFs={currentTopic?.PDFs ? currentTopic.PDFs : []} />
       )}
       {isLoading ? (
         <div style={{ margin: '10px' }}>
@@ -382,6 +409,10 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
         style={{
           maxHeight: '413px',
           maxWidth: '342px'
+        }}
+        okButtonProps={{
+          onClick: handleFileUpload,
+          disabled: !file
         }}
         okText={
           <>
@@ -425,10 +456,24 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
             <p>Type your own personalized content</p>
           </ModalInput>
           <ModalInput>
-            <button>
+            <button onClick={handleButtonClick}>
               <img src='/inputfile.png' alt='' />
             </button>
-            <p>Upload a pdf of your content</p>
+            <p>{file ? file?.name : 'Upload a pdf of your content'}</p>
+            <form action=''>
+              <input
+                type='file'
+                className='form-control'
+                accept='application/pdf'
+                required
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={(e) => {
+                  console.log(e?.target?.files?.[0])
+                  setFile(e?.target?.files?.[0])
+                }}
+              />
+            </form>
           </ModalInput>
         </ModalInputContainer>
       </StyledModal>

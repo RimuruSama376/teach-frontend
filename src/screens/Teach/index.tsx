@@ -107,7 +107,6 @@ const MyTabs = () => {
   }
 
   const onSearch = (value: string) => {
-    console.log('search:', value)
   }
   const filterOption = (input: string, option?: { label: string; value: string }) =>
     (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
@@ -173,7 +172,7 @@ const MyTabs = () => {
               <LeftOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
               <Select
                 showSearch
-                placeholder='Topic Name'
+                placeholder='Chapeter Name'
                 optionFilterProp='children'
                 onChange={onChange}
                 onSearch={onSearch}
@@ -181,6 +180,7 @@ const MyTabs = () => {
                 options={getDropDownChapters(chapters)}
                 value={activeChapter?.chapterId}
                 disabled={isLoading}
+                style={{ marginLeft: '5px', marginBottom: '5px' }}
               />
             </>
           </div>
@@ -204,7 +204,7 @@ const MyTabs = () => {
                 <LeftOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
                 <Select
                   showSearch
-                  placeholder='Topic Name'
+                  placeholder='Chapter Name'
                   optionFilterProp='children'
                   onChange={onChange}
                   onSearch={onSearch}
@@ -212,6 +212,7 @@ const MyTabs = () => {
                   options={getDropDownChapters(chapters)}
                   value={activeChapter?.chapterId}
                   disabled={isLoading}
+                  style={{ marginLeft: '5px', marginBottom: '5px' }}
                 />
               </>
             ),
@@ -231,14 +232,11 @@ const MyTabs = () => {
           }}
         >
           <StyledTabPane tab='Teach' key='1'>
-            {/* Content for Teach tab */}
             <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />
           </StyledTabPane>
           <StyledTabPane tab='Worksheet' key='2'>
-            {/* Content for Worksheet tab */}
           </StyledTabPane>
           <StyledTabPane tab='Mind-Map' key='3'>
-            {/* Content for Mind-Map tab */}
           </StyledTabPane>
         </Tabs>
       </TabsContainer>
