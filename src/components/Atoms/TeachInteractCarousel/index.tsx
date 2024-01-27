@@ -42,6 +42,12 @@ const Container = styled.div`
     border-radius: 50%; /* Makes it circular */
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
   }
+  @media (max-width: 600px) {
+    max-width: 400px;
+  }
+  @media (max-width: 450px) {
+    max-width: 300px;
+  }
 `
 
 const StyledCard = styled.div`
@@ -71,7 +77,7 @@ const Top = styled.div`
     border: 3px black solid;
     border-bottom: 0;
   }
-  `
+`
 const Bottom = styled.div`
   margin-top: 7px;
   width: 120px;
@@ -113,16 +119,17 @@ interface TeachCarouselProps {
 const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ PDFs }) => {
   const [slidesToShow, setSlidesToShow] = useState(3)
 
-  const onChange = (currentSlide: number) => {
-  }
+  const onChange = (currentSlide: number) => {}
 
   useEffect(() => {
     const handleResize = () => {
-      const containerWidth = document?.querySelector('.pdf-carousel-container')?.clientWidth || 1
+      const containerWidth = document?.querySelector('.ant-carousel')?.clientWidth || 1
+      // console.log(containerWidth)
       const slideWidth = 130
-      const newSlidesToShow = Math.max(1, Math.floor(containerWidth / slideWidth) || 4)
+      const newSlidesToShow = Math.max(1, Math.ceil(containerWidth / slideWidth))
 
       setSlidesToShow(Math.min(newSlidesToShow, 3))
+      // console.log(newSlidesToShow)
     }
 
     window.addEventListener('resize', handleResize)
@@ -133,8 +140,8 @@ const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ PDFs }) => {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
-  const openPdf = (filename: string) =>{
-    window.open(`https://teach-backend.onrender.com/files/${filename}`, "_blank", "noreferrer")
+  const openPdf = (filename: string) => {
+    window.open(`https://teach-backend.onrender.com/files/${filename}`, '_blank', 'noreferrer')
   }
   return (
     <Container className='dafdsfaf'>
@@ -168,10 +175,12 @@ const TeachInteractCarousel: React.FC<TeachCarouselProps> = ({ PDFs }) => {
                           fill='white'
                         />
                       </svg>
-                      <p>
-                        {p.name}
-                      </p>
-                      <button onClick={() => { openPdf(p.filename)}}>
+                      <p>{p.name}</p>
+                      <button
+                        onClick={() => {
+                          openPdf(p.filename)
+                        }}
+                      >
                         <svg
                           width='3'
                           height='14'
