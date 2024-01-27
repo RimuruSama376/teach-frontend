@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import withSidebarLayout from '../../components/HOCs/WithSidebar'
 import TeachSection from '../../components/Organisms/TeachSection'
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import axios from 'axios'
 
 const { TabPane } = Tabs
@@ -101,6 +102,11 @@ export interface ITopic {
   topicId: string
 }
 
+export enum QueryParam {
+  CHAPTERID = 'chapterId',
+  TOPICID = 'topicId'
+}
+
 export interface IChapter {
   chapterId: string
   name: string
@@ -114,9 +120,21 @@ const MyTabs = () => {
   const [hasError, setHasError] = useState(false)
   const [chapters, setChapters] = useState<IChapter[]>([])
   const [activeChapter, setActiveChapter] = useState<IChapter>()
+  let [searchParams, setSearchParams] = useSearchParams()
+
+  const updateURL = (s: string) => {
+    const newSearchParams = new URLSearchParams(searchParams)
+    newSearchParams.set(QueryParam.CHAPTERID, s)
+    setSearchParams(newSearchParams)
+  }
+  useEffect(() => {
+    console.log('myLog chapterId q: ', searchParams.get(QueryParam.CHAPTERID))
+  }, [setSearchParams])
 
   const onChange = (value: string) => {
+    console.log('myLog : ', value)
     setActiveChapter(chapters.find((c) => c.chapterId === value))
+    updateURL(value)
   }
 
   const onSearch = (value: string) => {}
@@ -132,8 +150,17 @@ const MyTabs = () => {
         }
         const response = await axios(configuration)
         if (response.data.length) {
+          const paramChapterId = searchParams.get(QueryParam.CHAPTERID)
+          const paramChapterIdValid = response.data.findIndex(
+            (o: IChapter) => o.chapterId === paramChapterId
+          )
+          if (paramChapterIdValid != -1) {
+            setActiveChapter(response.data[paramChapterIdValid])
+          } else {
+            setActiveChapter(response.data[0])
+            updateURL(response.data[0].chapterId)
+          }
           setChapters(response.data)
-          setActiveChapter(response.data[0])
         }
         setIsLoading(false)
       } catch (err) {
@@ -246,7 +273,9 @@ const MyTabs = () => {
           }}
         >
           <StyledTabPane tab='Teach' key='1' className='getThis'>
-            {isLoading || <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />}
+            {isLoading || (
+              <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />
+            )}
           </StyledTabPane>
           <StyledTabPane tab='Worksheet' key='2'></StyledTabPane>
           <StyledTabPane tab='Mind-Map' key='3'></StyledTabPane>

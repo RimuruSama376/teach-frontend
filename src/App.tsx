@@ -1,6 +1,14 @@
 import './App.css'
 import MyTabs from './screens/Teach'
 import { ConfigProvider } from 'antd'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MyTabs />
+  }
+])
 
 function App() {
   return (
@@ -12,7 +20,7 @@ function App() {
       }}
     >
       <div className='App'>
-        <MyTabs />
+        <RouterProvider router={router} />
       </div>
     </ConfigProvider>
   )

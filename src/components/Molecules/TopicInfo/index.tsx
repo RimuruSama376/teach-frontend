@@ -4,6 +4,8 @@ import { Button, Modal, Select, Skeleton } from 'antd'
 import TeachInteractCarousel from '../../Atoms/TeachInteractCarousel'
 import { IChapter, ITopic } from '../../../screens/Teach'
 import axios from 'axios'
+import { useSearchParams } from 'react-router-dom'
+import { QueryParam } from '../../../screens/Teach'
 
 const Container = styled.div`
   font-family: 'Nunito', sans-serif;
@@ -178,6 +180,17 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [file, setFile] = useState<any>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  let [searchParams, setSearchParams] = useSearchParams()
+
+  useEffect(() => {
+    console.log('myLog topicId : ', searchParams.get(QueryParam.TOPICID))
+  }, [setSearchParams])
+
+  const updateURL = (s: string) => {
+    const newSearchParams = new URLSearchParams(searchParams)
+    newSearchParams.set(QueryParam.TOPICID, s)
+    setSearchParams(newSearchParams)
+  }
 
   useEffect(() => {
     setTopics([])
@@ -187,7 +200,16 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
     if (activeChapter?.topics?.length) {
       setIsLoading(true)
       setTopics(activeChapter.topics)
-      setActiveTopic(activeChapter.topics[0])
+      const paramTopicId = searchParams.get(QueryParam.TOPICID)
+      const paramTopicIdValid = activeChapter.topics.findIndex(
+        (o: ITopic) => o.topicId === paramTopicId
+      )
+      if (paramTopicIdValid != -1) {
+        setActiveTopic(activeChapter.topics[paramTopicIdValid])
+      } else {
+        setActiveTopic(activeChapter.topics[0])
+        updateURL(activeChapter.topics[0].topicId)
+      }
     }
   }, [activeChapter])
 
@@ -196,6 +218,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
   }
   const onChange = (value: string) => {
     setActiveTopic(topics.find((c) => c.topicId === value))
+    updateURL(value)
   }
 
   const onSearch = (value: string) => {}
