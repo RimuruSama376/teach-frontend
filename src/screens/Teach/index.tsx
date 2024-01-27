@@ -95,6 +95,12 @@ const StyledTopBar = styled.div`
     /* flex-direction: column; */
     display: none;
   }
+  @media (max-width: 400px) {
+    /* flex-direction: column; */
+    .ant-select-selector {
+      width: 100px !important;
+    }
+  }
 `
 
 export interface ITopic {

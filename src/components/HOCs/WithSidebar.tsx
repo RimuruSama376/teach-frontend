@@ -6,23 +6,22 @@ import Sidebar from '../Sidebar'
 import NavBar from '../NavBar'
 
 const Container = styled.div`
-  height: 100vh;
+  height: 100vh !important;
   display: flex;
   flex-direction: column;
   @media (min-width: 801px) {
-    /* display: none !important; */
-    /* position: absolute;  */
+    flex-direction: row;
   }
 `
 
 const Header = styled.div`
   font-family: 'Nunito', sans-serif;
   padding: 10px;
-  background-color: #E9ECEF !important;
+  background-color: #e9ecef !important;
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px #E9ECEF solid;
+  border-bottom: 1px #e9ecef solid;
 
   @media (min-width: 801px) {
     display: none !important;
@@ -63,10 +62,8 @@ function withSidebarLayout<P>(WrappedComponent: ComponentType<P>) {
             {'Chaudhary Chhotu Ram Public School'}
           </span>
         </Header>
-        <Container style={{ display: 'flex', flexDirection: 'row' }}>
-          <Sidebar />
-          <WrappedComponent {...props} />
-        </Container>
+        <Sidebar />
+        <WrappedComponent {...props} />
         <NavBar />
       </Container>
     )

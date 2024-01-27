@@ -39,19 +39,11 @@ function getItem(
   } as MenuItem
 }
 
-const items: MenuItem[] = [
-  getItem('Option 5', '5'),
-  getItem('Option 6', '6'),
-  getItem('Option 7', '7'),
-  getItem('Option 8', '8')
-]
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  /* height: 70px; */
-  /* justify-self: flex-end; */
   width: 100%;
 
   @media (min-width: 801px) {
@@ -80,7 +72,6 @@ const StyledMenu = styled(Menu)`
     left: 0;
     right: 0;
     height: 10px;
-    box-shadow: 0px -5px 5px -5px rgba(0, 0, 0, 0.2);
     z-index: -1;
   }
 
@@ -91,10 +82,11 @@ const StyledMenu = styled(Menu)`
     flex-direction: column;
     align-items: center;
     padding: 0;
-    border-bottom: 2px solid transparent;
+    border-bottom: 0px solid transparent;
+    max-height: 70px !important;
 
     .anticon {
-      margin-bottom: 4px;
+      margin-bottom: 0px !important;
     }
 
     span {
@@ -110,7 +102,7 @@ const StyledMenu = styled(Menu)`
 
   .ant-menu-item-selected {
     color: #4b65f6;
-    border-bottom: 0;
+    border-bottom: 0 !important;
 
     &::after {
       display: none; // Hide the default Ant Design selection indicator
