@@ -332,7 +332,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
           value={activeTopic?.topicId}
           disabled={!activeChapter || isLoading}
         />
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '10px'}}>
+        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '10px', width: '100%'}}>
           <StyledButton onClick={toggleIsEditable} disabled={isLoading}>
             <svg
               width='24'
