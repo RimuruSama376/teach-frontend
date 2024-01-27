@@ -1,5 +1,7 @@
 import styled from 'styled-components'
-import { Carousel, Modal } from 'antd'
+import { Modal } from 'antd'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import { Carousel } from 'react-responsive-carousel'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import ReactPlayer from 'react-player'
 import { IChapter } from '../../../screens/Teach'
@@ -11,7 +13,7 @@ const Container = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  height: 252px !important;
+  height: 252px;
   margin-top: 20px;
   border-radius: 12px;
   background-color: #5ab2a6;
@@ -21,6 +23,7 @@ const Container = styled.div`
     flex-direction: row-reverse;
     align-items: center;
     justify-content: flex-start !important;
+    height: 184px;
   }
 `
 interface BlobProps {
@@ -28,6 +31,8 @@ interface BlobProps {
   left?: string
   top2?: string
   left2?: string
+  top3?: string
+  left3?: string
   scale?: number
 }
 
@@ -40,12 +45,18 @@ const Blob = styled.svg<BlobProps>`
     `translate(${props.left || 0}, ${props.top || 0}) scale(${props.scale || 1})`};
   z-index: 0;
   transition: transform 0.6s ease-in-out;
-
   @media (max-width: 1046px) {
     top: ${(props) => props.top || 'auto'};
     left: ${(props) => props.left || 'auto'};
     transform: ${(props) =>
       `translate(${props.left2 || 0}, ${props.top2 || 0}) scale(${props.scale || 1})`};
+  }
+  @media (max-width: 930px) {
+    top: ${(props) => props.top || 'auto'} !important;
+    left: ${(props) => props.left || 'auto'} !important;
+    transform: ${(props) =>
+      `translate(${props.left3 || 0}, ${props.top3 || 0}) scale(0.75)`};
+    /* transform: ${(props) => `scale(0.75)`} !important; */
   }
 `
 
@@ -121,55 +132,12 @@ const RightContainer = styled.div`
     margin-right: auto;
     margin-left: auto;
   }
-  .ant-carousel .slick-prev,
-  .ant-carousel .slick-next,
-  .ant-carousel .slick-prev:hover,
-  .ant-carousel .slick-next:hover {
-    font-size: inherit;
-    color: currentColor;
-  }
-
-  .ant-carousel .slick-prev,
-  .ant-carousel .slick-prev:hover {
-    position: absolute;
-    left: 10px;
-    top: 150px;
-    z-index: 2;
-    color: white;
-  }
-
-  .ant-carousel .slick-next,
-  .ant-carousel .slick-next:hover {
-    position: absolute;
-    top: 150px;
-    right: 10px;
-    z-index: 2;
-    color: white;
-  }
-
-  .slick-slide {
-    display: flex !important;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-  .slide-track {
-    /* @media (max-width: 700px) {
-      width: 1000px !important;
-    } */
-  }
-  .slick-slide {
-    @media (max-width: 700px) {
-      width: 250px !important;
-      height: 200px;
-      /* margin-right: 15px;
-      margin-left: 40px; */
-    }
-    .player-container {
+  .carousel-root .carousel .slider-wrapper ul {
+    .slide .player-container {
       div {
-        @media (max-width: 700px) {
-          width: 250px !important;
-          height: 200px;
+        width: inherit !important;
+        @media (max-width: 930px) {
+          height: 150px !important;
         }
       }
     }
@@ -230,6 +198,8 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         left='0px'
         top2='15px'
         left2='0px'
+        top3='-16px'
+        left3='-20px'
         width='305'
         height='245'
         viewBox='0 0 305 245'
@@ -248,6 +218,8 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         left='143px'
         top2='133px'
         left2='-60px'
+        top3='67px'
+        left3='-60px'
         width='23'
         height='16'
         viewBox='0 0 23 17'
@@ -261,6 +233,8 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         left='160px'
         top2='120px'
         left2='-50px'
+        top3='63px'
+        left3='-58px'
         width='33'
         height='32'
         viewBox='0 0 33 33'
@@ -274,6 +248,8 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         left='120px'
         top2='20px'
         left2='-120px'
+        top3='-10px'
+        left3='-105px'
         width='33'
         height='32'
         viewBox='0 0 33 33'
@@ -287,6 +263,8 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         left='200px'
         top2='15px'
         left2='-50px'
+        top3='12px'
+        left3='-80px'
         width='23'
         height='19'
         viewBox='0 0 23 19'
@@ -310,7 +288,7 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
       </Content>
       <RightContainer>
         {activeChapter?.videos?.length ? (
-          <Carousel arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />} dots={false}>
+          <Carousel showArrows={true} showThumbs={false} showIndicators={false} showStatus={false}>
             {activeChapter?.videos?.map((url, idx) => (
               <PlayerContainer key={idx} className='player-container'>
                 <ReactPlayer url={url} controls={true} height={240} width={420} />
