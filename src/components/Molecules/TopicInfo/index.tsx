@@ -244,7 +244,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
         setIsLoading(true)
         const configuration = {
           method: 'get',
-          url: `http://localhost:8000/topic/get-topic/?id=${activeTopic?.topicId}`
+          url: `https://teach-backend.onrender.com/topic/get-topic/?id=${activeTopic?.topicId}`
         }
         const response = await axios(configuration)
         setCurrentTopic(response.data)
@@ -275,7 +275,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
       try {
         const configuration = {
           method: 'patch',
-          url: `http://localhost:8000/topic/update-topic-description/?id=${currentTopic?.topicId}`,
+          url: `https://teach-backend.onrender.com/topic/update-topic-description/?id=${currentTopic?.topicId}`,
           data: {
             description: textAreaValue
           }
@@ -303,7 +303,7 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setAc
     try {
       const configuration = {
         method: 'post',
-        url: `http://localhost:8000/topic/add-pdf/?id=${activeTopic?.topicId}`,
+        url: `https://teach-backend.onrender.com/topic/add-pdf/?id=${activeTopic?.topicId}`,
         data: formData,
         headers: {
           'Content-Type': 'multipart/form-data'
