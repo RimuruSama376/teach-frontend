@@ -39,7 +39,7 @@ const Blob = styled.svg<BlobProps>`
   transform: ${(props) =>
     `translate(${props.left || 0}, ${props.top || 0}) scale(${props.scale || 1})`};
   z-index: 0;
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.6s ease-in-out;
 
   @media (max-width: 900px) {
     top: ${(props) => props.top || 'auto'};
@@ -247,7 +247,7 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         top='133px'
         left='143px'
         top2='133px'
-        left2='120px'
+        left2='-60px'
         width='23'
         height='16'
         viewBox='0 0 23 17'
@@ -260,7 +260,7 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         top='120px'
         left='160px'
         top2='120px'
-        left2='190px'
+        left2='-50px'
         width='33'
         height='32'
         viewBox='0 0 33 33'
@@ -270,10 +270,23 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         <circle cx='16.5' cy='16.5' r='16.5' fill='#FEC63D' />
       </Blob>
       <Blob
+        top='60px'
+        left='120px'
+        top2='20px'
+        left2='-120px'
+        width='33'
+        height='32'
+        viewBox='0 0 33 33'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <circle cx='16.5' cy='16.5' r='14.5' fill='#FEC63D' />
+      </Blob>
+      <Blob
         top='15px'
         left='200px'
         top2='15px'
-        left2='200px'
+        left2='-50px'
         width='23'
         height='19'
         viewBox='0 0 23 19'

@@ -385,8 +385,8 @@ const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
             title={false}
             active
             paragraph={{
-              rows: 10,
-              width: Array(10).fill('100%')
+              rows: 3,
+              width: Array(3).fill('100%')
             }}
           />
         </div>

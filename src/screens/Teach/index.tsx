@@ -17,8 +17,8 @@ const TabsContainer = styled.div`
   padding: 10px;
   padding-bottom: 0;
   /* margin-bottom: 20px; */
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 12px;
+  padding-right: 12px;
   .ant-tabs {
     font-family: 'Nunito', sans-serif;
     flex-grow: 1;
@@ -27,7 +27,7 @@ const TabsContainer = styled.div`
     display: flex;
     .ant-tabs-content-top {
       display: flex;
-      .ant-tabs-tabpane {
+      .ant-tabs-tabpane-active {
         display: flex;
         width: 100%;
         /* border: 2px green solid; */
@@ -46,6 +46,7 @@ const TabsContainer = styled.div`
     color: #cccccc;
   }
   .ant-tabs-tab-active {
+    /* padding: 5px 0px 10px 0px; */
     div {
       color: black !important;
     }
