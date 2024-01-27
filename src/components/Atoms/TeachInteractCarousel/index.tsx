@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 const Container = styled.div`
   margin-left: 10px;
   overflow-x: hidden;
-  /* max-width: 500px; */
+  max-width: 500px;
   width: 100%;
   display: block;
   justify-self: center;
