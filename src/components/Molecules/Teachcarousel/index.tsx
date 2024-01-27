@@ -309,13 +309,15 @@ const TeachCarousel: React.FC<TeachCarouselProps> = ({ activeChapter, handleAddC
         </button>
       </Content>
       <RightContainer>
-        <Carousel arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />} dots={false}>
-          {activeChapter?.videos?.map((url, idx) => (
-            <PlayerContainer key={idx} className='player-container'>
-              <ReactPlayer url={url} controls={true} height={240} width={420} />
-            </PlayerContainer>
-          ))}
-        </Carousel>
+        {activeChapter?.videos?.length ? (
+          <Carousel arrows prevArrow={<LeftOutlined />} nextArrow={<RightOutlined />} dots={false}>
+            {activeChapter?.videos?.map((url, idx) => (
+              <PlayerContainer key={idx} className='player-container'>
+                <ReactPlayer url={url} controls={true} height={240} width={420} />
+              </PlayerContainer>
+            ))}
+          </Carousel>
+        ) : null}
       </RightContainer>
     </Container>
   )

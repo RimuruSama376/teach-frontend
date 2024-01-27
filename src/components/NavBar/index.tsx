@@ -61,7 +61,7 @@ const Container = styled.div`
 `
 const StyledMenu = styled(Menu)`
   padding-top: 5px;
-  box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.2), 0 -2px 4px -1px rgba(0, 0, 0, 0.6);
+  border-top: 1px rgba(114, 113, 113, 0.35) solid;
   &.ant-menu-horizontal {
     border-bottom: none;
     display: flex;
@@ -109,7 +109,7 @@ const StyledMenu = styled(Menu)`
   }
 
   .ant-menu-item-selected {
-    color: #4B65F6;
+    color: #4b65f6;
     border-bottom: 0;
 
     &::after {
