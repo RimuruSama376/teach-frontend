@@ -246,7 +246,7 @@ const MyTabs = () => {
           }}
         >
           <StyledTabPane tab='Teach' key='1' className='getThis'>
-            <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />
+            {isLoading || <TeachSection activeChapter={activeChapter} handleAddContent={handleAddContent} />}
           </StyledTabPane>
           <StyledTabPane tab='Worksheet' key='2'></StyledTabPane>
           <StyledTabPane tab='Mind-Map' key='3'></StyledTabPane>

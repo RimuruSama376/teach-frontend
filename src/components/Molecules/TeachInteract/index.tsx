@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import TopicInfo from '../TopicInfo'
 import Whiteboard from '../Whiteboard'
-import { IChapter } from '../../../screens/Teach'
+import { IChapter, ITopic } from '../../../screens/Teach'
 import { useState } from 'react'
 
 const Container = styled.div`
@@ -44,16 +44,16 @@ const ToggleButton = styled.button`
 
 const TeachInteract: React.FC<TeachProps> = ({ activeChapter }) => {
   const [showTopicInfo, setShowTopicInfo] = useState(true)
-
+  const [activeTopic, setActiveTopic] = useState<ITopic>()
   const toggleView = () => setShowTopicInfo(!showTopicInfo)
   return (
     <>
       <Container className='teachinteract'>
-        <TopicInfo activeChapter={activeChapter}></TopicInfo>
+        <TopicInfo activeChapter={activeChapter} activeTopic={activeTopic} setActiveTopic={setActiveTopic}></TopicInfo>
         <Whiteboard></Whiteboard>
       </Container>
       <ContainerMobile>
-        {showTopicInfo ? <TopicInfo activeChapter={activeChapter} /> : <Whiteboard />}
+        {showTopicInfo ? <TopicInfo activeChapter={activeChapter} activeTopic={activeTopic} setActiveTopic={setActiveTopic} /> : <Whiteboard />}
         <ToggleButton onClick={toggleView}>
           <svg
             width='69'

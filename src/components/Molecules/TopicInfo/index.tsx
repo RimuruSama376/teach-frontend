@@ -57,6 +57,7 @@ const StyledButton = styled.button`
   height: fit-content;
   background-color: transparent;
   border: 0;
+  margin-right: 10px;
 `
 
 const StyledTextArea = styled.textarea`
@@ -155,6 +156,8 @@ const ModalInput = styled.div`
 
 interface TopicInfoProps {
   activeChapter: IChapter | undefined
+  activeTopic: ITopic | undefined
+  setActiveTopic: (t: ITopic | undefined) => void
 }
 
 interface ICurrentTopic extends ITopic {
@@ -165,9 +168,8 @@ interface ICurrentTopic extends ITopic {
   }[]
 }
 
-const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter }) => {
+const TopicInfo: React.FC<TopicInfoProps> = ({ activeChapter, activeTopic, setActiveTopic }) => {
   const [topics, setTopics] = useState<ITopic[]>([])
-  const [activeTopic, setActiveTopic] = useState<ITopic>()
   const [currentTopic, setCurrentTopic] = useState<ICurrentTopic>()
   const [isEditable, setIsEditable] = useState(false)
   const [isLoading, setIsLoading] = useState(true)

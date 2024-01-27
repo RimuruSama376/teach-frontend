@@ -41,7 +41,7 @@ const Blob = styled.svg<BlobProps>`
   z-index: 0;
   transition: transform 0.6s ease-in-out;
 
-  @media (max-width: 900px) {
+  @media (max-width: 1046px) {
     top: ${(props) => props.top || 'auto'};
     left: ${(props) => props.left || 'auto'};
     transform: ${(props) =>
